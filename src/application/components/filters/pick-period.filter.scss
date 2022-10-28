@@ -1,0 +1,43 @@
+.pick-period {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  &__element {
+    width: 100px;
+    text-align: center;
+    padding-bottom: 10px;
+    cursor: pointer;
+
+    &:nth-child(1).active~.pick-period__indicator {
+      transform: translateX(0);
+    }
+
+    &:nth-child(2).active~.pick-period__indicator {
+      transform: translateX(100px);
+    }
+
+    &:nth-child(3).active~.pick-period__indicator {
+      transform: translateX(200px);
+    }
+  }
+
+  &__indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #3880ff;
+    transition: ease-out 0.4s;
+  }
+
+}
