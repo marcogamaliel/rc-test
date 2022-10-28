@@ -1,6 +1,6 @@
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query'
-import AppRouter from './pages/app.router'
+import AppRouter from './application/pages/app.router'
 
 function App() {
   const queryClient = new QueryClient()
