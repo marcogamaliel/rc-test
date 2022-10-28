@@ -1,21 +1,12 @@
-import Chart from "chart.js/auto"
-import 'chartjs-adapter-luxon';
-import { createRef, useEffect } from "react"
-import { ChartDataset } from "../../../domain/model/line-chart.model"
-import { PointChart } from "../../../domain/model/point-chart.model"
+import React, { createRef, useEffect } from 'react'
+import Chart from 'chart.js/auto'
+import 'chartjs-adapter-luxon'
+import { ChartDataset } from '../../../domain/model/line-chart.model'
+import { PointChart } from '../../../domain/model/point-chart.model'
 
 let chart: Chart
 
-export function PortfolioIndexesChartComponent({portfolioIndexes}: {portfolioIndexes: PointChart[]}) {
-
-  const chartRef = createRef<HTMLCanvasElement>();
-
-  useEffect(() => {
-    const ctx = chartRef.current?.getContext("2d");
-    if (chart) chart.destroy()
-    if(ctx) chart = new Chart(ctx, config)
-  })
-
+export function PortfolioIndexesChartComponent({ portfolioIndexes }: { portfolioIndexes: PointChart[] }) {
   const datasets: ChartDataset[] = [
     {
       label: 'Portfolio value',
@@ -43,16 +34,24 @@ export function PortfolioIndexesChartComponent({portfolioIndexes}: {portfolioInd
             autoSkip: false,
             maxRotation: 0,
             major: {
-              enabled: true
-            }
-          }
+              enabled: true,
+            },
+          },
         },
         y: {
           display: true,
-        }
-      }
+        },
+      },
     },
-  };
+  }
+
+  const chartRef = createRef<HTMLCanvasElement>()
+
+  useEffect(() => {
+    const ctx = chartRef.current?.getContext('2d')
+    if (chart) chart.destroy()
+    if (ctx) chart = new Chart(ctx, config)
+  })
 
   return (
     <div>

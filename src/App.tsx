@@ -1,5 +1,6 @@
-import './App.css';
-import { RecoilRoot } from 'recoil';
+import './App.css'
+import React from 'react'
+import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import AppRouter from './application/pages/app.router'
 
@@ -13,7 +14,7 @@ function App() {
         </RecoilRoot>
       </QueryClientProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,8 +1,8 @@
-import { InvestmentEvolutionPoints } from "../model/investment-evolution-points.model"
-import { Period } from "../model/types/period.type"
+import { InvestmentEvolutionPoints } from '../model/investment-evolution-points.model'
+import { Period } from '../model/types/period.type'
 
 export abstract class FilterInvesmentDataByPeriodService {
-  static execute (
+  static execute(
     period: Period,
     investmentEvolution: InvestmentEvolutionPoints,
   ): InvestmentEvolutionPoints {
@@ -16,7 +16,7 @@ export abstract class FilterInvesmentDataByPeriodService {
   }
 
   private static selectIndexFrom(period: Period, investmentEvolution: InvestmentEvolutionPoints): number {
-    switch(period) {
+    switch (period) {
       case '5D': return 5
       case '1M': return this.getIndexOf1M(investmentEvolution)
       case '12M': return this.getIndexOf12M(investmentEvolution)
