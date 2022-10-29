@@ -15,6 +15,11 @@
     text-align: center;
     padding-bottom: 10px;
     cursor: pointer;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      transform: translateY(-0.2rem);
+    }
 
     &:nth-child(1).active~.pick-period__indicator {
       transform: translateX(0);

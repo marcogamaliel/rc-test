@@ -1,0 +1,27 @@
+.back {
+  &:hover {
+    animation: back .8s ease-out infinite;
+  }
+}
+
+@keyframes back {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-0.2rem);
+  }
+
+  0% {
+    transform: translateX(0);
+  }
+
+  0% {
+    transform: translateX(0.2rem);
+  }
+
+  100% {
+    transform: translateX(0.2rem);
+  }
+}

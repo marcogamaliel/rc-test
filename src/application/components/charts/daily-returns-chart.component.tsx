@@ -13,6 +13,7 @@ export function DailyReturnsChartComponent({ dailyReturns }: { dailyReturns: Poi
       data: dailyReturns,
       borderColor: 'rgb(54, 162, 235)',
       backgroundColor: 'rgba(54, 162, 235, 0.5)',
+      borderWidth: 1,
       fill: false,
     },
   ]
@@ -26,13 +27,8 @@ export function DailyReturnsChartComponent({ dailyReturns }: { dailyReturns: Poi
         mode: 'nearest',
       },
       plugins: {
-        title: {
-          display: true,
-          text: 'Chart.js Time - spanGaps: 172800000 (2 days in ms)',
-        },
-        filler: {
-          propagate: false,
-          drawTime: 'beforeDatasetsDraw' as any,
+        legend: {
+          position: 'bottom'
         },
       },
       scales: {
@@ -63,14 +59,12 @@ export function DailyReturnsChartComponent({ dailyReturns }: { dailyReturns: Poi
   })
 
   return (
-    <div>
-      <h2>Investment Evolution Chart</h2>
+    <div className="chart-container">
       <canvas
-        id="evolution-chart"
-        width="400"
-        height="300"
+        width="360"
+        height="250"
         ref={chartRef}
-      ></canvas>
+      />
     </div>
   )
 }

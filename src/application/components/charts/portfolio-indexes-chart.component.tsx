@@ -99,14 +99,12 @@ export function PortfolioIndexesChartComponent(
   })
 
   return (
-    <div>
-      <h2>Investment Evolution Chart</h2>
+    <div className="chart-container">
       <canvas
-        id="evolution-chart"
-        width="400"
-        height="300"
+        width="360"
+        height="250"
         ref={chartRef}
-      ></canvas>
+      />
     </div>
   )
 }

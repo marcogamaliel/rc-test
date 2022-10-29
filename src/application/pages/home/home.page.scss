@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "Mirador";
+  src: url('../../../../public/mirador_black-webfont.07e83e287595ef18fd6d.woff') format('woff');
+}
+
+.home-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 7rem;
+
+  h1 {
+    font-family: Mirador, 'Raleway', 'sans-serif';
+    font-size: 4rem;
+    text-transform: none;
+    animation: title 1.5s ease-out;
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    animation: menu 2s ease-out;
+
+    a {
+      width: 7rem;
+      text-transform: none;
+      text-decoration: none;
+      font-size: 1rem;
+      border: 1px solid black;
+      border-radius: 1.8rem;
+      padding: 0.8rem 1.2rem;
+      color: black;
+
+      &:hover {
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+
+  @keyframes title {
+    0% {
+      transform: translateX(-4rem) translateY(-2rem);
+      opacity: 0;
+    }
+
+    20% {
+      transform: translateX(-3rem) translateY(-2rem);
+      text-shadow: 10px 10px 10px rgba(10, 10, 10, 0.7);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateX(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes menu {
+    0% {
+      opacity: 0;
+    }
+
+    30% {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}

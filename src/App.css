@@ -18,5 +18,17 @@ h3 {
 
 section {
   margin: 0 auto;
-  max-width: Min(80vw, 1000px);
+  max-width: Min(90vw, 1050px);
+  position: relative;
+  padding-bottom: 5rem;
+}
+
+a.back {
+  position: absolute;
+  top: 0;
+  left: 0.5rem;
+}
+
+.chart-container {
+  position: relative;
 }

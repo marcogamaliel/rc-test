@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import './analysis.page.scss'
 import { doc, DocumentData, getDoc } from "firebase/firestore"
 import { useRecoilState } from "recoil"
 import { db } from "../../../db/firebase"
@@ -10,11 +11,15 @@ import { movingAverage } from "../../../domain/services/moving-average.service"
 import { AnalysisFilterComponent } from "../../components/filters/analysis/analysis.filter"
 import { movingAverages } from "../../components/states/analysis.state"
 import { bollingerBandsService } from "../../../domain/services/bollinger-bands.service"
+import { PickPeriodFilter } from "../../components/filters/pick-period/pick-period.filter"
+import { dashboardSelectedPeriod } from "../../components/states/dashboard.state"
+import { Back } from "../../components/back/back.component"
 
 export function AnalysisPage() {
   const [invesmentEvolution, setInvesmentEvolution] = useState<InvestmentEvolutionPoints>({
     contributions: [], dailyReturns: [], portfolioIndexes: [], portfolioValues: [],
   })
+  const [selectedPeriod, setSelectedPeriod] = useRecoilState(dashboardSelectedPeriod)
   const [filter, setFilter] = useRecoilState(movingAverages)
 
   useEffect(() => {
@@ -28,7 +33,7 @@ export function AnalysisPage() {
   }, [])
 
   const { portfolioIndexes } = FilterInvesmentDataByPeriodService
-    .execute('12M', invesmentEvolution)
+    .execute(selectedPeriod, invesmentEvolution)
 
   const { ma4IsActive, ma10IsActive, bollingerIsActive } = filter
 
@@ -37,10 +42,12 @@ export function AnalysisPage() {
   const bollinger = bollingerIsActive ? bollingerBandsService(portfolioIndexes) : undefined
 
   return (
-    <section>
+    <section className="analysis-page">
       <h1>Analysis</h1>
+      <Back />
+      <PickPeriodFilter selected={selectedPeriod} setSelected={setSelectedPeriod} />
       <AnalysisFilterComponent values={filter} setValues={setFilter} />
-      {portfolioIndexes.length > 0 ? <PortfolioIndexesChartComponent portfolioIndexes={portfolioIndexes} ma10={ma10} ma4={ma4} bollinger={bollinger} /> : 'hola'}
+      {portfolioIndexes.length > 0 ? <PortfolioIndexesChartComponent portfolioIndexes={portfolioIndexes} ma10={ma10} ma4={ma4} bollinger={bollinger} /> : 'loading...'}
     </section>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { AnalysisFilter } from '../../../../domain/model/analysis-filter.model'
 import './analysis.filter.scss'
+import { AnalysisFilter } from '../../../../domain/model/analysis-filter.model'
 
 export function AnalysisFilterComponent(
   { values, setValues }: { values: AnalysisFilter, setValues: (values: AnalysisFilter) => void }
