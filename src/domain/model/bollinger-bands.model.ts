@@ -1,4 +1,4 @@
-import { PointChart } from "./point-chart.model"
+import { PointChart } from './point-chart.model'
 
 export type BollingerBands = {
   upperBand: PointChart[]

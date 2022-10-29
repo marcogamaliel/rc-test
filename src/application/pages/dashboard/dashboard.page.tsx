@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './dashboard.page.scss'
-import { useRecoilState } from 'recoil'
-import { DocumentData, doc, getDoc } from 'firebase/firestore'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { DailyReturnsChartComponent } from '../../components/charts/daily-returns-chart.component'
 import { InvestmentEvolutionChartComponent } from '../../components/charts/investment-evolution-chart.component'
 import { PortfolioIndexesChartComponent } from '../../components/charts/portfolio-indexes-chart.component'
-import { db } from '../../../db/firebase'
 import { invesmentEvolutionProcessorService } from '../../../domain/services/investment-evolution-processor.service'
 import { dashboardSelectedPeriod } from '../../components/states/dashboard.state'
 import { FilterInvesmentDataByPeriodService } from '../../../domain/services/filter-invesment-data-by-period.service'
@@ -14,8 +12,11 @@ import { PickPeriodFilter } from '../../components/filters/pick-period/pick-peri
 import { DailyInvestment } from '../../../domain/model/daily-investment.model'
 import { Back } from '../../components/back/back.component'
 import { BalanceComponent } from '../../components/balance/balance.component'
+import { InvestmentEvolutionRepository } from '../../../domain/repositories/investment-evolution/investment-evolution.repository'
+import { usernameAtom } from '../../components/states/global.state'
 
 export default function DashboardPage() {
+  const username = useRecoilValue<string>(usernameAtom)
   const [invesmentEvolution, setInvesmentEvolution] = useState<InvestmentEvolutionPoints>({
     contributions: [], dailyReturns: [], portfolioIndexes: [], portfolioValues: [],
   })
@@ -25,13 +26,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     setLoading(true)
-    const docRef = doc(db, 'investmentEvolutions/user1')
-    getDoc(docRef)
-    .then((document: DocumentData) => {
-      const data = document.data()
-      setCurrentState(data.array.slice(-1).pop())
+    InvestmentEvolutionRepository.getByUser(username).then((data) => {
+      setCurrentState(data.slice(-1).pop())
       setInvesmentEvolution(
-        invesmentEvolutionProcessorService(data.array),
+        invesmentEvolutionProcessorService(data),
+      )
+      setInvesmentEvolution(
+        invesmentEvolutionProcessorService(data),
       )
       setLoading(false)
     }).catch((error) => {

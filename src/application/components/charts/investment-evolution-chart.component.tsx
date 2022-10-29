@@ -42,7 +42,7 @@ export function InvestmentEvolutionChartComponent(
           drawTime: 'beforeDatasetsDraw' as any,
         },
         legend: {
-          position: 'bottom'
+          position: 'bottom',
         },
       },
       scales: {

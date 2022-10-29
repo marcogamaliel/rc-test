@@ -18,12 +18,13 @@ export abstract class FilterInvesmentDataByPeriodService {
   private static selectIndexFrom(period: Period, investmentEvolution: InvestmentEvolutionPoints): number {
     switch (period) {
       case '5D': return 5
-      case '1M': return this.getIndexOf1M(investmentEvolution)
+      case '1M': return this.getIndexOf1M()
       case '12M': return this.getIndexOf12M(investmentEvolution)
+      default: throw new Error('Invalid period')
     }
   }
 
-  private static getIndexOf1M(investmentEvolution: InvestmentEvolutionPoints): number {
+  private static getIndexOf1M(): number {
     // should get the data from the last months, for test purpose this is not implemented
     return 20
   }

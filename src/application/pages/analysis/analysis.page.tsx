@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react'
 import './analysis.page.scss'
-import { doc, DocumentData, getDoc } from "firebase/firestore"
-import { useRecoilState } from "recoil"
-import { db } from "../../../db/firebase"
-import { InvestmentEvolutionPoints } from "../../../domain/model/investment-evolution-points.model"
-import { FilterInvesmentDataByPeriodService } from "../../../domain/services/filter-invesment-data-by-period.service"
-import { invesmentEvolutionProcessorService } from "../../../domain/services/investment-evolution-processor.service"
-import { PortfolioIndexesChartComponent } from "../../components/charts/portfolio-indexes-chart.component"
-import { movingAverage } from "../../../domain/services/moving-average.service"
-import { AnalysisFilterComponent } from "../../components/filters/analysis/analysis.filter"
-import { movingAverages } from "../../components/states/analysis.state"
-import { bollingerBandsService } from "../../../domain/services/bollinger-bands.service"
-import { PickPeriodFilter } from "../../components/filters/pick-period/pick-period.filter"
-import { dashboardSelectedPeriod } from "../../components/states/dashboard.state"
-import { Back } from "../../components/back/back.component"
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { InvestmentEvolutionPoints } from '../../../domain/model/investment-evolution-points.model'
+import { FilterInvesmentDataByPeriodService } from '../../../domain/services/filter-invesment-data-by-period.service'
+import { invesmentEvolutionProcessorService } from '../../../domain/services/investment-evolution-processor.service'
+import { PortfolioIndexesChartComponent } from '../../components/charts/portfolio-indexes-chart.component'
+import { movingAverage } from '../../../domain/services/moving-average.service'
+import { AnalysisFilterComponent } from '../../components/filters/analysis/analysis.filter'
+import { movingAverages } from '../../components/states/analysis.state'
+import { bollingerBandsService } from '../../../domain/services/bollinger-bands.service'
+import { PickPeriodFilter } from '../../components/filters/pick-period/pick-period.filter'
+import { dashboardSelectedPeriod } from '../../components/states/dashboard.state'
+import { Back } from '../../components/back/back.component'
+import { InvestmentEvolutionRepository } from '../../../domain/repositories/investment-evolution/investment-evolution.repository'
+import { usernameAtom } from '../../components/states/global.state'
+import { DailyInvestment } from '../../../domain/model/daily-investment.model'
 
 export function AnalysisPage() {
+  const username = useRecoilValue<string>(usernameAtom)
   const [invesmentEvolution, setInvesmentEvolution] = useState<InvestmentEvolutionPoints>({
     contributions: [], dailyReturns: [], portfolioIndexes: [], portfolioValues: [],
   })
@@ -23,11 +25,9 @@ export function AnalysisPage() {
   const [filter, setFilter] = useRecoilState(movingAverages)
 
   useEffect(() => {
-    const docRef = doc(db, 'investmentEvolutions/user1')
-    getDoc(docRef).then((document: DocumentData) => {
-      const data = document.data()
+    InvestmentEvolutionRepository.onSnapshotByUser(username, (data: DailyInvestment[]) => {
       setInvesmentEvolution(
-        invesmentEvolutionProcessorService(data.array),
+        invesmentEvolutionProcessorService(data),
       )
     })
   }, [])

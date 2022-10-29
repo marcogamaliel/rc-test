@@ -1,6 +1,6 @@
-import { numberH } from "./number.helper"
+import { numberH } from './number.helper'
 
 export function percentageH(data?: number): string | undefined {
-  if(!data) return undefined
+  if (!data) return undefined
   return `${numberH(data)} %`
 }

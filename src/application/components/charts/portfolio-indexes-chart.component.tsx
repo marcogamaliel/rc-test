@@ -1,16 +1,36 @@
-import React, { createRef, useEffect } from 'react'
+import React, {
+  MutableRefObject, createRef, useEffect, useRef,
+} from 'react'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-luxon'
-import { ChartDataset } from '../../../domain/model/line-chart.model'
 import { PointChart } from '../../../domain/model/point-chart.model'
 import { BollingerBands } from '../../../domain/model/bollinger-bands.model'
-
-let chart: Chart
+import { dataHasChangedAndUpdateH } from '../../helpers/data-has-changed-and-update.helper'
 
 export function PortfolioIndexesChartComponent(
-  { portfolioIndexes, ma4, ma10, bollinger }: { portfolioIndexes: PointChart[], ma4?: PointChart[], ma10?: PointChart[], bollinger?: BollingerBands },
+  {
+    portfolioIndexes, ma4, ma10, bollinger,
+  }: { portfolioIndexes: PointChart[], ma4?: PointChart[], ma10?: PointChart[], bollinger?: BollingerBands },
 ) {
-  const datasets: ChartDataset[] = [
+  const chart: MutableRefObject<Chart | undefined> = useRef(undefined)
+
+  const datasets: any = chart.current ? chart.current.data.datasets : [
+    {
+      label: 'ma4',
+      data: ma4,
+      borderColor: 'rgb(255, 124, 0)',
+      backgroundColor: 'rgb(255, 124, 0)',
+      borderWidth: 2,
+      fill: false,
+    },
+    {
+      label: 'ma10',
+      data: ma10,
+      borderColor: 'rgb(252, 213, 53)',
+      backgroundColor: 'rgb(252, 213, 53)',
+      borderWidth: 2,
+      fill: false,
+    },
     {
       label: 'Portfolio Index',
       data: portfolioIndexes,
@@ -18,44 +38,29 @@ export function PortfolioIndexesChartComponent(
       backgroundColor: 'rgba(75, 192, 192, 0.5)',
       fill: false,
     },
-  ]
-  
-  if(ma10) datasets.unshift({
-    label: 'ma10',
-    data: ma10,
-    borderColor: 'rgb(252, 213, 53)',
-    backgroundColor: 'rgb(252, 213, 53)',
-    borderWidth: 2,
-    fill: false,
-  })
-  
-  if(ma4) datasets.unshift({
-    label: 'ma4',
-    data: ma4,
-    borderColor: 'rgb(255, 124, 0)',
-    backgroundColor: 'rgb(255, 124, 0)',
-    borderWidth: 2,
-    fill: false,
-  })
-
-  if(bollinger) {
-    datasets.push({
+    {
       label: 'bollinger',
-      data: bollinger.upperBand,
+      data: bollinger?.upperBand,
       borderColor: 'rgb(18, 157, 214)',
       backgroundColor: 'rgba(18, 157, 214, 0.5)',
       borderWidth: 1,
       fill: false,
-    })
-    datasets.push({
+    },
+    {
       label: 'bollinger',
-      data: bollinger.lowerBand,
+      data: bollinger?.lowerBand,
       borderColor: 'rgb(18, 157, 214)',
       backgroundColor: 'rgba(18, 157, 214, 0.5)',
       borderWidth: 1,
       fill: '-1',
-    })
-  }
+    },
+  ]
+
+  dataHasChangedAndUpdateH(ma4, chart, 0)
+  dataHasChangedAndUpdateH(ma10, chart, 1)
+  dataHasChangedAndUpdateH(portfolioIndexes, chart, 2)
+  dataHasChangedAndUpdateH(bollinger?.upperBand, chart, 3)
+  dataHasChangedAndUpdateH(bollinger?.lowerBand, chart, 4)
 
   const config: any = {
     type: 'line',
@@ -68,7 +73,7 @@ export function PortfolioIndexesChartComponent(
       },
       plugins: {
         legend: {
-          position: 'bottom'
+          position: 'bottom',
         },
       },
       scales: {
@@ -87,6 +92,20 @@ export function PortfolioIndexesChartComponent(
           display: true,
         },
       },
+      animations: {
+        y: {
+          easing: 'easeInOutElastic',
+          from: (ctx: any): undefined | 0 => {
+            if (ctx.type === 'data') {
+              if (ctx.mode === 'default' && !ctx.dropped) {
+                ctx.dropped = true
+                return 0
+              }
+            }
+            return undefined
+          },
+        },
+      },
     },
   }
 
@@ -94,9 +113,11 @@ export function PortfolioIndexesChartComponent(
 
   useEffect(() => {
     const ctx = chartRef.current?.getContext('2d')
-    if (chart) chart.destroy()
-    if (ctx) chart = new Chart(ctx, config)
-  })
+    if (chart.current) chart.current.destroy()
+    if (ctx) chart.current = new Chart(ctx, config)
+  }, [])
+  if (chart.current) chart.current.data.datasets = datasets as any
+  chart.current?.update()
 
   return (
     <div className="chart-container">

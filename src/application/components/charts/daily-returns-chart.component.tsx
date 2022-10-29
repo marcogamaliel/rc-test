@@ -28,7 +28,7 @@ export function DailyReturnsChartComponent({ dailyReturns }: { dailyReturns: Poi
       },
       plugins: {
         legend: {
-          position: 'bottom'
+          position: 'bottom',
         },
       },
       scales: {

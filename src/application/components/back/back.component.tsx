@@ -1,5 +1,6 @@
+import React from 'react'
 import './back.component.scss'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
 export function Back() {
   return (

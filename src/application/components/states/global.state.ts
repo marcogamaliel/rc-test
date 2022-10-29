@@ -1,4 +1,4 @@
-import {atom} from 'recoil'
+import { atom } from 'recoil'
 import { InvestmentEvolutionPoints } from '../../../domain/model/investment-evolution-points.model'
 
 export const investmentEvolutionPoints = atom<InvestmentEvolutionPoints>({
@@ -9,4 +9,9 @@ export const investmentEvolutionPoints = atom<InvestmentEvolutionPoints>({
     portfolioIndexes: [],
     portfolioValues: [],
   },
+})
+
+export const usernameAtom = atom<string>({
+  key: 'username',
+  default: 'user1',
 })

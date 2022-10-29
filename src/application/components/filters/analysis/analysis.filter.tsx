@@ -3,7 +3,7 @@ import './analysis.filter.scss'
 import { AnalysisFilter } from '../../../../domain/model/analysis-filter.model'
 
 export function AnalysisFilterComponent(
-  { values, setValues }: { values: AnalysisFilter, setValues: (values: AnalysisFilter) => void }
+  { values, setValues }: { values: AnalysisFilter, setValues: (values: AnalysisFilter) => void },
 ) {
   const { ma4IsActive, ma10IsActive, bollingerIsActive } = values
   return (
