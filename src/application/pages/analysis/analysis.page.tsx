@@ -9,6 +9,7 @@ import { PortfolioIndexesChartComponent } from "../../components/charts/portfoli
 import { movingAverage } from "../../../domain/services/moving-average.service"
 import { AnalysisFilterComponent } from "../../components/filters/analysis/analysis.filter"
 import { movingAverages } from "../../components/states/analysis.state"
+import { bollingerBandsService } from "../../../domain/services/bollinger-bands.service"
 
 export function AnalysisPage() {
   const [invesmentEvolution, setInvesmentEvolution] = useState<InvestmentEvolutionPoints>({
@@ -29,16 +30,17 @@ export function AnalysisPage() {
   const { portfolioIndexes } = FilterInvesmentDataByPeriodService
     .execute('12M', invesmentEvolution)
 
-  const { ma4IsActive, ma10IsActive } = filter
+  const { ma4IsActive, ma10IsActive, bollingerIsActive } = filter
 
   const ma4 = ma4IsActive ? movingAverage(portfolioIndexes, 4) : undefined
   const ma10 = ma10IsActive ? movingAverage(portfolioIndexes, 10) : undefined
+  const bollinger = bollingerIsActive ? bollingerBandsService(portfolioIndexes) : undefined
 
   return (
-    <div>
+    <section>
       <h1>Analysis</h1>
       <AnalysisFilterComponent values={filter} setValues={setFilter} />
-      {portfolioIndexes.length > 0 ? <PortfolioIndexesChartComponent portfolioIndexes={portfolioIndexes} ma10={ma10} ma4={ma4} /> : 'hola'}
-    </div>
+      {portfolioIndexes.length > 0 ? <PortfolioIndexesChartComponent portfolioIndexes={portfolioIndexes} ma10={ma10} ma4={ma4} bollinger={bollinger} /> : 'hola'}
+    </section>
   )
 }

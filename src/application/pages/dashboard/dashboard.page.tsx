@@ -32,12 +32,12 @@ export default function DashboardPage() {
   } = FilterInvesmentDataByPeriodService.execute(selectedPeriod, invesmentEvolution)
 
   return (
-    <div>
+    <section>
       <h1>Dashboard</h1>
       <PickPeriodFilter selected={selectedPeriod} setSelected={setSelectedPeriod} />
       {portfolioValues.length > 0 ? <InvestmentEvolutionChartComponent portfolioValues={portfolioValues} contributions={contributions} /> : 'hola'}
       {dailyReturns.length > 0 ? <DailyReturnsChartComponent dailyReturns={dailyReturns} /> : 'hola'}
       {portfolioIndexes.length > 0 ? <PortfolioIndexesChartComponent portfolioIndexes={portfolioIndexes} /> : 'hola'}
-    </div>
+    </section>
   )
 }

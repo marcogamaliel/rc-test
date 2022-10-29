@@ -3,11 +3,12 @@ import Chart from 'chart.js/auto'
 import 'chartjs-adapter-luxon'
 import { ChartDataset } from '../../../domain/model/line-chart.model'
 import { PointChart } from '../../../domain/model/point-chart.model'
+import { BollingerBands } from '../../../domain/model/bollinger-bands.model'
 
 let chart: Chart
 
 export function PortfolioIndexesChartComponent(
-  { portfolioIndexes, ma4, ma10 }: { portfolioIndexes: PointChart[], ma4?: PointChart[], ma10?: PointChart[] },
+  { portfolioIndexes, ma4, ma10, bollinger }: { portfolioIndexes: PointChart[], ma4?: PointChart[], ma10?: PointChart[], bollinger?: BollingerBands },
 ) {
   const datasets: ChartDataset[] = [
     {
@@ -21,21 +22,40 @@ export function PortfolioIndexesChartComponent(
   
   if(ma10) datasets.unshift({
     label: 'ma10',
-      data: ma10,
-      borderColor: 'rgb(252, 213, 53)',
-      backgroundColor: 'rgb(252, 213, 53)',
-      borderWidth: 2,
+    data: ma10,
+    borderColor: 'rgb(252, 213, 53)',
+    backgroundColor: 'rgb(252, 213, 53)',
+    borderWidth: 2,
+    fill: false,
+  })
+  
+  if(ma4) datasets.unshift({
+    label: 'ma4',
+    data: ma4,
+    borderColor: 'rgb(255, 124, 0)',
+    backgroundColor: 'rgb(255, 124, 0)',
+    borderWidth: 2,
+    fill: false,
+  })
+
+  if(bollinger) {
+    datasets.push({
+      label: 'bollinger',
+      data: bollinger.upperBand,
+      borderColor: 'rgb(18, 157, 214)',
+      backgroundColor: 'rgba(18, 157, 214, 0.5)',
+      borderWidth: 1,
       fill: false,
     })
-    
-    if(ma4) datasets.unshift({
-      label: 'ma4',
-      data: ma4,
-      borderColor: 'rgb(255, 124, 0)',
-      backgroundColor: 'rgb(255, 124, 0)',
-      borderWidth: 2,
-      fill: false,
-  })
+    datasets.push({
+      label: 'bollinger',
+      data: bollinger.lowerBand,
+      borderColor: 'rgb(18, 157, 214)',
+      backgroundColor: 'rgba(18, 157, 214, 0.5)',
+      borderWidth: 1,
+      fill: '-1',
+    })
+  }
 
   const config: any = {
     type: 'line',

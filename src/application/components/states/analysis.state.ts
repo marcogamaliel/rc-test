@@ -6,5 +6,6 @@ export const movingAverages = atom<AnalysisFilter>({
   default: {
     ma4IsActive: false,
     ma10IsActive: false,
+    bollingerIsActive: false,
   },
 })

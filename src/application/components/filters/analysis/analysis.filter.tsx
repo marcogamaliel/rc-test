@@ -5,7 +5,7 @@ import './analysis.filter.scss'
 export function AnalysisFilterComponent(
   { values, setValues }: { values: AnalysisFilter, setValues: (values: AnalysisFilter) => void }
 ) {
-  const { ma4IsActive, ma10IsActive } = values
+  const { ma4IsActive, ma10IsActive, bollingerIsActive } = values
   return (
     <div className="analysis-filter__wrapper">
       <div className="analysis-filter">
@@ -20,6 +20,12 @@ export function AnalysisFilterComponent(
           onClick={() => setValues({ ...values, ma10IsActive: !ma10IsActive })}
         >
           Moving Average 10 Days
+        </div>
+        <div
+          className={`on-off ${bollingerIsActive ? 'active' : ''}`}
+          onClick={() => setValues({ ...values, bollingerIsActive: !bollingerIsActive })}
+        >
+          Bollinger Bands
         </div>
       </div>
     </div>
