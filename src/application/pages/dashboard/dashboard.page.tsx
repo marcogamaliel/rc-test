@@ -5,11 +5,11 @@ import { DailyReturnsChartComponent } from '../../components/charts/daily-return
 import { InvestmentEvolutionChartComponent } from '../../components/charts/investment-evolution-chart.component'
 import { PortfolioIndexesChartComponent } from '../../components/charts/portfolio-indexes-chart.component'
 import { db } from '../../../db/firebase'
-import { invesmentEvolutionProcessorService } from '../../../domain/services/investment-evolution-processor/investment-evolution-processor.service'
-import { dashboardSelectedPeriod } from '../../components/state/dashboard.state'
-import { PickPeriodFilter } from '../../components/filters/pick-period.filter'
+import { invesmentEvolutionProcessorService } from '../../../domain/services/investment-evolution-processor.service'
+import { dashboardSelectedPeriod } from '../../components/states/dashboard.state'
 import { FilterInvesmentDataByPeriodService } from '../../../domain/services/filter-invesment-data-by-period.service'
 import { InvestmentEvolutionPoints } from '../../../domain/model/investment-evolution-points.model'
+import { PickPeriodFilter } from '../../components/filters/pick-period/pick-period.filter'
 
 export default function DashboardPage() {
   const [invesmentEvolution, setInvesmentEvolution] = useState<InvestmentEvolutionPoints>({

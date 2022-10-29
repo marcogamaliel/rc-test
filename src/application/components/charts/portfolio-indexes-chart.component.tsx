@@ -6,16 +6,36 @@ import { PointChart } from '../../../domain/model/point-chart.model'
 
 let chart: Chart
 
-export function PortfolioIndexesChartComponent({ portfolioIndexes }: { portfolioIndexes: PointChart[] }) {
+export function PortfolioIndexesChartComponent(
+  { portfolioIndexes, ma4, ma10 }: { portfolioIndexes: PointChart[], ma4?: PointChart[], ma10?: PointChart[] },
+) {
   const datasets: ChartDataset[] = [
     {
-      label: 'Portfolio value',
+      label: 'Portfolio Index',
       data: portfolioIndexes,
       borderColor: 'rgb(75, 192, 192)',
       backgroundColor: 'rgba(75, 192, 192, 0.5)',
       fill: false,
     },
   ]
+  
+  if(ma10) datasets.unshift({
+    label: 'ma10',
+      data: ma10,
+      borderColor: 'rgb(252, 213, 53)',
+      backgroundColor: 'rgb(252, 213, 53)',
+      borderWidth: 2,
+      fill: false,
+    })
+    
+    if(ma4) datasets.unshift({
+      label: 'ma4',
+      data: ma4,
+      borderColor: 'rgb(255, 124, 0)',
+      backgroundColor: 'rgb(255, 124, 0)',
+      borderWidth: 2,
+      fill: false,
+  })
 
   const config: any = {
     type: 'line',
@@ -25,6 +45,11 @@ export function PortfolioIndexesChartComponent({ portfolioIndexes }: { portfolio
       responsive: true,
       interaction: {
         mode: 'nearest',
+      },
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
       },
       scales: {
         x: {

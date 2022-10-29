@@ -1,6 +1,6 @@
-import { DailyInvestment } from '../../model/daily-investment.model'
-import { InvestmentEvolutionPoints } from '../../model/investment-evolution-points.model'
-import { PointChart } from '../../model/point-chart.model'
+import { DailyInvestment } from '../model/daily-investment.model'
+import { InvestmentEvolutionPoints } from '../model/investment-evolution-points.model'
+import { PointChart } from '../model/point-chart.model'
 
 export function invesmentEvolutionProcessorService(investmentEvolution: DailyInvestment[]): InvestmentEvolutionPoints {
   const contributions: PointChart[] = []

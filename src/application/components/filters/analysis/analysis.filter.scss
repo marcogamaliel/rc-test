@@ -1,0 +1,31 @@
+.analysis-filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  .on-off {
+    border: 1px rgb(24, 218, 174) solid;
+    color: rgb(24, 218, 174);
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    flex-wrap: wrap;
+    display: flex;
+    cursor: pointer;
+
+    &.active,
+    &.active:hover {
+      color: white;
+      background: rgb(24, 218, 174);
+    }
+
+    &:hover {
+      color: rgb(24, 218, 174);
+      background: rgba(24, 218, 174, 0.3);
+    }
+  }
+
+}

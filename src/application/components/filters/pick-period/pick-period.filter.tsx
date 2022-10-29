@@ -1,5 +1,5 @@
 import React from 'react'
-import { Period } from '../../../domain/model/types/period.type'
+import { Period } from '../../../../domain/model/types/period.type'
 import './pick-period.filter.scss'
 
 export function PickPeriodFilter(
