@@ -35,9 +35,9 @@ export default function DashboardPage() {
         invesmentEvolutionProcessorService(data),
       )
       setLoading(false)
-    }).catch((error) => {
+    }).catch(() => {
       setLoading(false)
-      console.error('error', error)
+      // console.error('error', error), delete for deploy
     })
   }, [])
 
